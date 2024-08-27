@@ -90,7 +90,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IdCardSystem _idSystem = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
-    [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
@@ -471,7 +471,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     {
         var map = _mapSystem.CreateMap(out var mapId);
 
-        if (!_loader.TryLoadGrid(mapId, mapPath, out var grid))
+        if (!_map.TryLoadGrid(mapId, mapPath, out var grid))
         {
             Log.Error($"Failed to set up centcomm grid!");
             return;
@@ -501,8 +501,9 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         component.MapEntity = map;
+        _metaData.SetEntityName(map, Loc.GetString("map-name-centcomm"));
         component.Entity = grid;
-        _shuttle.TryAddFTLDestination(mapId, false, out _);
+        _shuttle.TryAddFTLDestination(mapId, true, out _);
         Log.Info($"Created centcomm grid {ToPrettyString(grid)} on map {ToPrettyString(map)} for station {ToPrettyString(station)}");
     }
 
@@ -548,7 +549,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         // Load escape shuttle
         var shuttlePath = ent.Comp1.EmergencyShuttlePath;
-        if (!_loader.TryLoadGrid(map.MapId,
+        if (!_map.TryLoadGrid(map.MapId,
             shuttlePath,
             out var shuttle,
             // Should be far enough... right? I'm too lazy to bounds check CentComm rn.

@@ -565,7 +565,7 @@ public sealed class ArrivalsSystem : EntitySystem
                 Range = 32f
             };
             AddComp(map.Value, restricted);
-            
+
             var dayNight = new DayNightCycleComponent
             {
                 CurrentCycleTime = 0.5f,
