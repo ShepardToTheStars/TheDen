@@ -25,6 +25,6 @@ public sealed class DockEmergencyShuttleCommand : IConsoleCommand
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var system = _sysManager.GetEntitySystem<EmergencyShuttleSystem>();
-        system.CallEmergencyShuttle();
+        system.DockEmergencyShuttle();
     }
 }
