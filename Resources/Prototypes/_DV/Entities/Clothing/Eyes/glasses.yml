@@ -52,6 +52,7 @@
   - type: ShowHealthIcons
     damageContainers:
     - Biological
+    - BiologicalMetaphysical
   - type: Tag
     tags:
     - HamsterWearable
