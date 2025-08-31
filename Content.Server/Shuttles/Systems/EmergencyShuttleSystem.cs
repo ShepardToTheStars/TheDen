@@ -298,8 +298,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         if (!Resolve(stationUid, ref stationShuttle))
             return null;
 
-        if (!TryComp<TransformComponent>(stationShuttle.EmergencyShuttle, out var xform) ||
-            !TryComp<ShuttleComponent>(stationShuttle.EmergencyShuttle, out var shuttle))
+        if (!TryComp<ShuttleComponent>(stationShuttle.EmergencyShuttle, out var shuttle))
         {
             Log.Error($"Attempted to call an emergency shuttle for an uninitialized station? Station: {ToPrettyString(stationUid)}. Shuttle: {ToPrettyString(stationShuttle.EmergencyShuttle)}");
             return null;

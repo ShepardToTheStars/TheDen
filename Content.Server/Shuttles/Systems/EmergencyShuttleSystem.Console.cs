@@ -227,9 +227,7 @@ public sealed partial class EmergencyShuttleSystem
             var stationUid = _station.GetOwningStation(uid);
 
             if (!TryComp<StationCentcommComponent>(stationUid, out var centcomm) ||
-                Deleted(centcomm.Entity) ||
-                pod.LaunchTime == null ||
-                pod.LaunchTime > _timing.CurTime)
+                Deleted(centcomm.Entity) || pod.LaunchTime == null || pod.LaunchTime > _timing.CurTime)
             {
                 continue;
             }
